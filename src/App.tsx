@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { X, Sparkles } from "lucide-react"; // or whatever icons you have
+import React, { useState, useEffect } from 'react';
+import { X, Sparkles } from 'lucide-react';
 
-// 1. PLACE THE INTERFACE HERE (Outside the component)
+// --- Interfaces ---
 interface Experiment {
   name: string;
   required: string[];
@@ -10,15 +10,7 @@ interface Experiment {
   steps: string[];
 }
 
-export default function App() {
-  // 2. UPDATE YOUR STATES HERE (Inside the component)
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [matches, setMatches] = useState<Experiment[]>([]);
-
-  // ... rest of your code
-import { X, Sparkles } from 'lucide-react';
-
-// Raisin SVG component
+// --- Icons ---
 const RaisinIcon = () => (
   <svg viewBox="0 0 100 100" className="w-12 h-12 mx-auto">
     <path d="M 50 10 Q 70 15 80 30 Q 85 45 82 60 Q 78 75 65 85 Q 50 92 35 85 Q 22 75 18 60 Q 15 45 20 30 Q 30 15 50 10 Z" 
@@ -32,37 +24,25 @@ const RaisinIcon = () => (
   </svg>
 );
 
-// Vegetable Oil SVG component
 const VegetableOilIcon = () => (
   <svg viewBox="0 0 100 100" className="w-12 h-12 mx-auto">
-    {/* Bottle outline */}
     <path d="M 35 15 L 35 20 L 30 25 L 30 90 Q 30 95 35 95 L 65 95 Q 70 95 70 90 L 70 25 L 65 20 L 65 15 Z" 
           fill="#FFD700" stroke="#5C3A2E" strokeWidth="3" strokeLinejoin="round"/>
-    
-    {/* Cap */}
     <rect x="40" y="10" width="20" height="8" rx="2" fill="#FF6B9D" stroke="#5C3A2E" strokeWidth="3"/>
     <rect x="42" y="18" width="16" height="4" fill="#7DD3C0" stroke="#5C3A2E" strokeWidth="2"/>
-    
-    {/* Label area */}
     <rect x="35" y="50" width="30" height="25" fill="#FF6B9D" stroke="#5C3A2E" strokeWidth="2.5"/>
-    
-    {/* Oil drop icon */}
     <path d="M 50 58 Q 47 62 47 66 Q 47 70 50 70 Q 53 70 53 66 Q 53 62 50 58 Z" 
           fill="#FFD700" stroke="#5C3A2E" strokeWidth="2"/>
-    
-    {/* Ridges */}
     <ellipse cx="50" cy="38" rx="18" ry="3" fill="none" stroke="#5C3A2E" strokeWidth="2.5"/>
     <ellipse cx="50" cy="43" rx="18" ry="3" fill="none" stroke="#5C3A2E" strokeWidth="2.5"/>
     <ellipse cx="50" cy="78" rx="18" ry="3" fill="none" stroke="#5C3A2E" strokeWidth="2.5"/>
     <ellipse cx="50" cy="83" rx="18" ry="3" fill="none" stroke="#5C3A2E" strokeWidth="2.5"/>
-    
-    {/* Shine effect */}
     <ellipse cx="58" cy="60" rx="3" ry="6" fill="#FFB6C1" opacity="0.6"/>
   </svg>
 );
 
-// Experiment Database
-const EXPERIMENTS = [
+// --- Data ---
+const EXPERIMENTS: Experiment[] = [
   {
     name: "Erupting Volcano",
     required: ["Vinegar", "Baking Soda"],
@@ -185,7 +165,6 @@ const EXPERIMENTS = [
   }
 ];
 
-// Available items with icons
 const ITEMS = [
   { name: "Vinegar", icon: "🧴" },
   { name: "Baking Soda", icon: "📦" },
@@ -203,21 +182,22 @@ const ITEMS = [
   { name: "Raisins", icon: "", useCustomIcon: "raisins" }
 ];
 
+// --- Main Component ---
 function App() {
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [showResults, setShowResults] = useState(false);
-  const [matches, setMatches] = useState([]);
-  const [currentMatches, setCurrentMatches] = useState([]);
+  const [matches, setMatches] = useState<Experiment[]>([]);
+  const [currentMatches, setCurrentMatches] = useState<Experiment[]>([]);
 
   // Calculate matches in real-time
-  React.useEffect(() => {
+  useEffect(() => {
     const matched = EXPERIMENTS.filter(exp => {
       return exp.required.every(req => selectedItems.includes(req));
     });
     setCurrentMatches(matched);
   }, [selectedItems]);
 
-  const toggleItem = (itemName) => {
+  const toggleItem = (itemName: string) => {
     if (selectedItems.includes(itemName)) {
       setSelectedItems(selectedItems.filter(i => i !== itemName));
     } else {
@@ -225,7 +205,7 @@ function App() {
     }
   };
 
-  const removeItem = (itemName) => {
+  const removeItem = (itemName: string) => {
     setSelectedItems(selectedItems.filter(i => i !== itemName));
   };
 
@@ -239,7 +219,7 @@ function App() {
     setMatches([]);
   };
 
-  const getYouTubeSearchLink = (searchQuery) => {
+  const getYouTubeSearchLink = (searchQuery: string) => {
     const encoded = encodeURIComponent(searchQuery);
     return `https://www.youtube.com/results?search_query=${encoded}`;
   };
@@ -513,4 +493,4 @@ function App() {
   );
 }
 
-  export default App;
+export default App;
