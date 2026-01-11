@@ -1,4 +1,21 @@
 import React, { useState } from 'react';
+import { X, Sparkles } from "lucide-react"; // or whatever icons you have
+
+// 1. PLACE THE INTERFACE HERE (Outside the component)
+interface Experiment {
+  name: string;
+  required: string[];
+  optional: string[];
+  youtubeSearch: string;
+  steps: string[];
+}
+
+export default function App() {
+  // 2. UPDATE YOUR STATES HERE (Inside the component)
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [matches, setMatches] = useState<Experiment[]>([]);
+
+  // ... rest of your code
 import { X, Sparkles } from 'lucide-react';
 
 // Raisin SVG component
