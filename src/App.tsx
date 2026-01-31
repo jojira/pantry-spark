@@ -48,6 +48,7 @@ const VegetableOilIcon = () => (
 const EXPERIMENTS = [
   {
     name: "Erupting Volcano",
+    image: "/images/volcano.png",
     required: ["Vinegar", "Baking Soda"],
     optional: ["Food Coloring", "Dish Soap"],
     youtubeSearch: "erupting volcano experiment for kids",
@@ -60,6 +61,7 @@ const EXPERIMENTS = [
   },
   {
     name: "Magic Swirling Milk",
+    image: "/images/magic-milk.png",
     required: ["Milk", "Dish Soap", "Food Coloring"],
     optional: [],
     youtubeSearch: "magic milk experiment for kids",
@@ -72,6 +74,7 @@ const EXPERIMENTS = [
   },
   {
     name: "Magic Oobleck Slime",
+    image: "/images/oobleck.png",
     required: ["Cornstarch", "Water"],
     optional: ["Food Coloring"],
     youtubeSearch: "oobleck experiment for kids",
@@ -84,6 +87,7 @@ const EXPERIMENTS = [
   },
   {
     name: "Lava Lamp in a Glass",
+    image: "/images/lava-lamp.png",
     required: ["Vegetable Oil", "Water", "Alka-Seltzer"],
     optional: ["Food Coloring"],
     youtubeSearch: "lava lamp experiment for kids",
@@ -96,6 +100,7 @@ const EXPERIMENTS = [
   },
   {
     name: "The Bouncy Naked Egg",
+    image: "/images/bouncy-egg.png",
     required: ["Vinegar", "Eggs"],
     optional: [],
     youtubeSearch: "bouncy egg experiment for kids",
@@ -108,6 +113,7 @@ const EXPERIMENTS = [
   },
   {
     name: "Rain Cloud in a Jar",
+    image: "/images/rain-cloud.png",
     required: ["Shaving Cream", "Water", "Food Coloring"],
     optional: [],
     youtubeSearch: "rain cloud jar experiment for kids",
@@ -120,6 +126,7 @@ const EXPERIMENTS = [
   },
   {
     name: "Floating Egg Mystery",
+    image: "/images/floating-egg.png",
     required: ["Water", "Salt", "Eggs"],
     optional: [],
     youtubeSearch: "floating egg salt water experiment for kids",
@@ -132,6 +139,7 @@ const EXPERIMENTS = [
   },
   {
     name: "Secret Invisible Ink",
+    image: "/images/invisible-ink.png",
     required: ["Lemon Juice", "Water"],
     optional: [],
     youtubeSearch: "invisible ink lemon juice experiment for kids",
@@ -144,6 +152,7 @@ const EXPERIMENTS = [
   },
   {
     name: "Fireworks in a Jar",
+    image: "/images/fireworks.png",
     required: ["Vegetable Oil", "Water", "Food Coloring"],
     optional: [],
     youtubeSearch: "fireworks in a jar experiment for kids",
@@ -156,6 +165,7 @@ const EXPERIMENTS = [
   },
   {
     name: "Dancing Raisins",
+    image: "/images/dancing-raisins.png",
     required: ["Baking Soda", "Vinegar", "Water", "Raisins"],
     optional: [],
     youtubeSearch: "dancing raisins experiment for kids",
@@ -279,6 +289,16 @@ function App() {
                     <h2 className="text-4xl font-black mb-6" style={{ color: '#2D5D7B' }}>
                       {exp.name}
                     </h2>
+
+                    {/* Experiment Image */}
+                    <div className="mb-6">
+                      <img 
+                        src={exp.image} 
+                        alt={exp.name}
+                        className="w-full max-w-md mx-auto h-64 object-cover rounded-xl shadow-lg"
+                        style={{ border: '3px solid #BD93D8' }}
+                      />
+                    </div>
 
                     {/* What You'll Need */}
                     <div className="mb-6" style={{ borderLeft: '4px solid #BD93D8', paddingLeft: '1rem' }}>
