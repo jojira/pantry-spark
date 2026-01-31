@@ -1,16 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { X, Sparkles } from 'lucide-react';
 
-// --- Interfaces ---
-interface Experiment {
-  name: string;
-  required: string[];
-  optional: string[];
-  youtubeSearch: string;
-  steps: string[];
-}
-
-// --- Icons ---
+// Raisin SVG component
 const RaisinIcon = () => (
   <svg viewBox="0 0 100 100" className="w-12 h-12 mx-auto">
     <path d="M 50 10 Q 70 15 80 30 Q 85 45 82 60 Q 78 75 65 85 Q 50 92 35 85 Q 22 75 18 60 Q 15 45 20 30 Q 30 15 50 10 Z" 
@@ -24,25 +15,37 @@ const RaisinIcon = () => (
   </svg>
 );
 
+// Vegetable Oil SVG component
 const VegetableOilIcon = () => (
   <svg viewBox="0 0 100 100" className="w-12 h-12 mx-auto">
+    {/* Bottle outline */}
     <path d="M 35 15 L 35 20 L 30 25 L 30 90 Q 30 95 35 95 L 65 95 Q 70 95 70 90 L 70 25 L 65 20 L 65 15 Z" 
           fill="#FFD700" stroke="#5C3A2E" strokeWidth="3" strokeLinejoin="round"/>
+    
+    {/* Cap */}
     <rect x="40" y="10" width="20" height="8" rx="2" fill="#FF6B9D" stroke="#5C3A2E" strokeWidth="3"/>
     <rect x="42" y="18" width="16" height="4" fill="#7DD3C0" stroke="#5C3A2E" strokeWidth="2"/>
+    
+    {/* Label area */}
     <rect x="35" y="50" width="30" height="25" fill="#FF6B9D" stroke="#5C3A2E" strokeWidth="2.5"/>
+    
+    {/* Oil drop icon */}
     <path d="M 50 58 Q 47 62 47 66 Q 47 70 50 70 Q 53 70 53 66 Q 53 62 50 58 Z" 
           fill="#FFD700" stroke="#5C3A2E" strokeWidth="2"/>
+    
+    {/* Ridges */}
     <ellipse cx="50" cy="38" rx="18" ry="3" fill="none" stroke="#5C3A2E" strokeWidth="2.5"/>
     <ellipse cx="50" cy="43" rx="18" ry="3" fill="none" stroke="#5C3A2E" strokeWidth="2.5"/>
     <ellipse cx="50" cy="78" rx="18" ry="3" fill="none" stroke="#5C3A2E" strokeWidth="2.5"/>
     <ellipse cx="50" cy="83" rx="18" ry="3" fill="none" stroke="#5C3A2E" strokeWidth="2.5"/>
+    
+    {/* Shine effect */}
     <ellipse cx="58" cy="60" rx="3" ry="6" fill="#FFB6C1" opacity="0.6"/>
   </svg>
 );
 
-// --- Data ---
-const EXPERIMENTS: Experiment[] = [
+// Experiment Database
+const EXPERIMENTS = [
   {
     name: "Erupting Volcano",
     required: ["Vinegar", "Baking Soda"],
@@ -165,6 +168,7 @@ const EXPERIMENTS: Experiment[] = [
   }
 ];
 
+// Available items with icons
 const ITEMS = [
   { name: "Vinegar", icon: "🧴" },
   { name: "Baking Soda", icon: "📦" },
@@ -182,22 +186,21 @@ const ITEMS = [
   { name: "Raisins", icon: "", useCustomIcon: "raisins" }
 ];
 
-// --- Main Component ---
 function App() {
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [selectedItems, setSelectedItems] = useState([]);
   const [showResults, setShowResults] = useState(false);
-  const [matches, setMatches] = useState<Experiment[]>([]);
-  const [currentMatches, setCurrentMatches] = useState<Experiment[]>([]);
+  const [matches, setMatches] = useState([]);
+  const [currentMatches, setCurrentMatches] = useState([]);
 
   // Calculate matches in real-time
-  useEffect(() => {
+  React.useEffect(() => {
     const matched = EXPERIMENTS.filter(exp => {
       return exp.required.every(req => selectedItems.includes(req));
     });
     setCurrentMatches(matched);
   }, [selectedItems]);
 
-  const toggleItem = (itemName: string) => {
+  const toggleItem = (itemName) => {
     if (selectedItems.includes(itemName)) {
       setSelectedItems(selectedItems.filter(i => i !== itemName));
     } else {
@@ -205,7 +208,7 @@ function App() {
     }
   };
 
-  const removeItem = (itemName: string) => {
+  const removeItem = (itemName) => {
     setSelectedItems(selectedItems.filter(i => i !== itemName));
   };
 
@@ -219,7 +222,7 @@ function App() {
     setMatches([]);
   };
 
-  const getYouTubeSearchLink = (searchQuery: string) => {
+  const getYouTubeSearchLink = (searchQuery) => {
     const encoded = encodeURIComponent(searchQuery);
     return `https://www.youtube.com/results?search_query=${encoded}`;
   };
@@ -425,42 +428,18 @@ function App() {
       </div>
 
       {/* Fixed Lab Bench */}
-      <div className="fixed bottom-0 left-0 right-0 z-10 shadow-2xl" style={{ backgroundColor: 'white', borderTop: '4px solid #BD93D8' }}>
-        <div className="max-w-6xl mx-auto p-6">
-          <div className="flex items-center justify-between gap-4 flex-wrap">
-            <div className="flex-1 min-w-0">
-              <h2 className="text-xl md:text-2xl font-black uppercase tracking-wide mb-2" style={{ color: '#2D5D7B' }}>
+      <div className="fixed bottom-0 left-0 right-0 z-10 shadow-2xl" style={{ backgroundColor: 'white', borderTop: '4px solid #BD93D8', maxHeight: '35vh' }}>
+        <div className="max-w-6xl mx-auto p-4 md:p-6 flex flex-col" style={{ maxHeight: '35vh' }}>
+          <div className="flex items-start md:items-center justify-between gap-4 mb-3">
+            <div className="flex-shrink-0">
+              <h2 className="text-lg md:text-2xl font-black uppercase tracking-wide whitespace-nowrap" style={{ color: '#2D5D7B' }}>
                 Your Lab Bench
               </h2>
-              {selectedItems.length === 0 ? (
-                <p className="text-lg" style={{ color: '#BD93D8' }}>
-                  Select 2-6 items to get started
-                </p>
-              ) : (
-                <div className="flex flex-wrap gap-2">
-                  {selectedItems.map(item => (
-                    <div
-                      key={item}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold shadow-md animate-[slideIn_0.3s_ease-out]"
-                      style={{ backgroundColor: '#BD93D8', color: 'white' }}
-                    >
-                      <span>{ITEMS.find(i => i.name === item)?.icon}</span>
-                      <span className="text-sm uppercase">{item}</span>
-                      <button
-                        onClick={() => removeItem(item)}
-                        className="ml-1 hover:scale-110 transition"
-                      >
-                        <X size={18} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
             <button
               onClick={sparkMyLab}
               disabled={selectedItems.length < 2 || currentMatches.length === 0}
-              className={`px-8 py-4 rounded-xl font-black text-xl shadow-lg transition uppercase tracking-wide ${
+              className={`flex-shrink-0 px-4 md:px-8 py-3 md:py-4 rounded-xl font-black text-base md:text-xl shadow-lg transition uppercase tracking-wide ${
                 selectedItems.length >= 2 && currentMatches.length > 0
                   ? 'hover:shadow-xl hover:scale-105'
                   : 'opacity-50 cursor-not-allowed'
@@ -470,10 +449,37 @@ function App() {
                 color: '#2D5D7B'
               }}
             >
-              <Sparkles className="inline mr-2" size={24} />
+              <Sparkles className="inline mr-2" size={20} />
               Spark My Lab!
             </button>
           </div>
+          
+          {selectedItems.length === 0 ? (
+            <p className="text-sm md:text-lg" style={{ color: '#BD93D8' }}>
+              Select 2-6 items to get started
+            </p>
+          ) : (
+            <div className="flex-1 overflow-y-auto pr-2" style={{ maxHeight: 'calc(35vh - 80px)' }}>
+              <div className="flex flex-wrap gap-2">
+                {selectedItems.map(item => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-2 px-3 md:px-4 py-2 rounded-lg font-bold shadow-md animate-[slideIn_0.3s_ease-out]"
+                    style={{ backgroundColor: '#BD93D8', color: 'white' }}
+                  >
+                    <span className="text-sm md:text-base">{ITEMS.find(i => i.name === item)?.icon}</span>
+                    <span className="text-xs md:text-sm uppercase whitespace-nowrap">{item}</span>
+                    <button
+                      onClick={() => removeItem(item)}
+                      className="ml-1 hover:scale-110 transition"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
